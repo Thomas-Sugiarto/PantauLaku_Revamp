@@ -199,7 +199,7 @@ body {
 .page-title {
     font-size: 24px;
     font-weight: 600;
-    color: #2c3e50;
+    color: #FFFFFF;
     margin: 0;
 }
 
@@ -337,6 +337,7 @@ body {
     color: #000000;              
     font-weight: bold;           
     text-align: center;
+}
 
 .table td {
     padding: 12px;
@@ -363,7 +364,7 @@ body {
 
 .form-label {
     font-weight: 500;
-    color: #ff1919;
+    color: black;
     margin-bottom: 6px;
 }
 
@@ -384,13 +385,34 @@ body {
     border-color: #ec6c47;
 }
 
-.btn.btn-primary-2 {
+.btn-primary {
+    background-color: #ec6c47 !important;
+    border-color: #ec6c47 !important;
+    color: #fff!important;
+}
+
+.btn.terapkan-filter {
     background-color: #ec6c47 !important;
     border-color: #ec6c47 !important;
     color: #fff !important;
 }
 
-.btn.btn-primary-2:hover {
+/* A more specific selector for the hover state */
+.btn.terapkan-filter:hover {
+    background-color: #ff9966 !important;
+    border-color: #ff9966 !important;
+    color: #fff !important;
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.terapkan-filter {
+    position: relative; /* Establishes a positioning context */
+    z-index: 20; /* A value high enough to bring it forward */
+}
+
+
+.btn-primary:hover {
     background-color: #ff9966 !important;
     border-color: #ff9966 !important;
     color: #fff !important;
@@ -407,8 +429,9 @@ body {
 .btn:hover {
     opacity: 0.9;
     transform: translateY(-1px);
+    background-color: #ff9966; /* Warna hover oranye yang lebih terang */
+    border-color: #ff9966;
 }
-
 .btn-sm {
     padding: 6px 12px;
     font-size: 12px;
@@ -435,7 +458,6 @@ body {
     padding: 4px 8px;
     border-radius: 4px;
     font-weight: 500;
-    background: linear-gradient(225deg, #6d69f1 0%, #312be1 100%);
     color: #fff;
 }
 
