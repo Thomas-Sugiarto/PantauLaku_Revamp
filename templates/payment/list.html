@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Daftar Pembayaran{% endblock %}
+
+{% block content %}
+            
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>
+                        <i class="fas fa-money-bill-wave"></i> Daftar Pembayaran
+                    </h1>
+                    <a href="{{ url_for('payment_add') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Tambah Pembayaran
+                    </a>
+                </div>
+                <div class="card">
+                <div class="card-body">
+                    <!-- Filter Form -->
+                    <form method="GET" class="mb-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="start_date">Tanggal Mulai:</label>
+                                <input type="date" class="form-control" id="start_date" name="start_date" value="{{ start_date }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="end_date">Tanggal Akhir:</label>
+                                <input type="date" class="form-control" id="end_date" name="end_date" value="{{ end_date }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="outlet_id">Outlet:</label>
+                                <select class="form-control" id="outlet_id" name="outlet_id">
+                                    <option value="">Semua Outlet</option>
+                                    {% for outlet in outlets %}
+                                        <option value="{{ outlet.id }}" {% if outlet.id == selected_outlet %}selected{% endif %}>
+                                            {{ outlet.nama }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button type="submit" class="btn btn-secondary">
+                                    <i class="fas fa-filter"></i> Filter
+                                </button>
+                                <a href="{{ url_for('payment_list') }}" class="btn btn-secondary ms-2">
+                                    <i class="fas fa-times"></i> Reset
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Outlet Balances Summary -->
+                    {% if outlet_balances %}
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <h5>Ringkasan Tagihan Outlet</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Outlet</th>
+                                            <th class="text-right">Total Tagihan</th>
+                                            <th class="text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for outlet_id, balance in outlet_balances.items() %}
+                                        {% if balance > 0 %}
+                                        <tr>
+                                            <td>{{ outlets_dict.get(outlet_id, 'Unknown') }}</td>
+                                            <td class="text-right">
+                                                <span class="badge badge-warning">Rp {{ balance | number_format }}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="btn-group" role="group">
+                                                    <a href="{{ url_for('payment_add', outlet_id=outlet_id) }}" 
+                                                       class="btn btn-sm btn-success" title="Tambah Pembayaran">
+                                                        <i class="fas fa-plus"></i> Bayar
+                                                    </a>
+                                                    <a href="{{ url_for('preview_invoice', outlet_id=outlet_id, start_date=start_date, end_date=end_date) }}" 
+                                                       class="btn btn-sm btn-info" title="Preview Invoice">
+                                                        <i class="fas fa-eye"></i> Preview
+                                                    </a>
+                                                    <a href="{{ url_for('export_invoice_pdf', outlet_id=outlet_id, start_date=start_date, end_date=end_date) }}" 
+                                                       class="btn btn-sm btn-danger" title="Download Invoice PDF">
+                                                        <i class="fas fa-file-pdf"></i> PDF
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Payments List -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Outlet</th>
+                                    <th class="text-right">Jumlah Bayar</th>
+                                    <th>Tanggal Bayar</th>
+                                    <th>Tanggal Pelunasan</th>
+                                    <th>Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if payments %}
+                                    {% for payment in payments %}
+                                    <tr>
+                                        <td>{{ payment.id }}</td>
+                                        <td>{{ payment.outlet_nama }}</td>
+                                        <td class="text-right">Rp {{ payment.jumlah_bayar | number_format }}</td>
+                                        <td>{{ payment.tanggal_bayar }}</td>
+                                        <td>{{ payment.tanggal_pelunasan or '-' }}</td>
+                                        <td>
+                                            {% if payment.status == 'lunas' %}
+                                                <span class="badge status-lunas">Lunas</span>
+                                            {% else %}
+                                                <span class="badge status-belum">Sebagian</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7" class="text-center">Tidak ada data pembayaran</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
