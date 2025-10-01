@@ -48,6 +48,26 @@ body {
     border-top-right-radius: 80px;
     overflow: hidden;
     transition: transform 0.3s ease;
+} 
+.sidebar a {
+    display: block;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 6px;
+}
+
+/* Saat hover */
+.sidebar a:hover {
+    background-color: #ec6c47;
+    color: rgb(255, 255, 255);
+}
+
+/* Saat menu dipilih (active) */
+.sidebar a.active {
+    background-color: #fff8f6;
+    color: rgb(0, 0, 0);
 }
 
 /* Logo Container */
@@ -85,21 +105,26 @@ body {
     display: flex;
     align-items: center;
     padding: 12px 20px;
-    color: #000000;
+    color: #ec6c47;
     text-decoration: none;
     transition: all 0.2s ease;
 }
 
 .nav-item:hover {
-    background: #ec6c47 ;
+    background: #ee9c86 ;
     color: #ffffff;
 }
 .nav-item:hover i {
-    color: #ffffff; /* ikon putih */
+    color: white; /* ikon putih */
 }
+
+.nav-item.active:hover i {
+    color: #ec6c47;
+}
+
 .nav-item.active {
     background:none;
-    color: none;
+    color: white;
 }
 
 .nav-item.active::before {
@@ -460,11 +485,24 @@ body {
 
 
 
-.alert-success,
-.alert-danger,
-.alert-warning {
-     background: linear-gradient(225deg, #6e69f1d6 0%, #312be1d6 100%);
+/* sukses = hijau */
+.alert-success {
+    background:  #218838;
+    color: #fff;
 }
+
+/* gagal = merah */
+.alert-danger {
+    background:  #e12b2bd6 ;
+    color: #fff;
+}
+
+/* warning = orange/kuning */
+.alert-warning {
+    background: linear-gradient(225deg, #ffb84d 0%, #ff9933 100%);
+    color: #212529;
+}
+
 
 /* Badge Styles */
 .badge {
@@ -639,27 +677,22 @@ body {
     }
     
     /* Tables - Horizontal scroll */
-    
-    .table.table-hover {
-        border-collapse: separate !important; /* override bootstrap */
-        border-spacing: 8px 0 !important;    /* jarak antar kolom 8px */
-    }
-    
-    .table.table-hover thead th {
-        border: 1px solid #ec6c47;
+    .table-responsive {
         border-radius: 8px;
-        background: #fff;
-        padding: 10px 12px;
-        text-align: center;
-        font-weight: bold;
-    }
-
-    .table-responsive table {
-        border-collapse: separate !important;
-        border-spacing: 8px 0 !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
+    .table {
+        font-size: 12px;
+        min-width: 600px;
+    }
+  
     
+    .table th,
+    .table td {
+        padding: 8px 6px;
+        white-space: nowrap;
+    }
     
     /* Forms */
     .form-control,
